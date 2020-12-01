@@ -1,0 +1,50 @@
+.pet-card {
+    border-radius: 15px;
+    overflow: hidden;
+    /* TODO: integrate wil less rather than copy & pasting */
+    -webkit-box-shadow: 0 1px 2px -2px rgba(0, 0, 0, 0.16), 0 3px 6px 0 rgba(0, 0, 0, 0.12), 0 5px 12px 4px rgba(0, 0, 0, 0.09);
+    box-shadow: 0 1px 2px -2px rgba(0, 0, 0, 0.16), 0 3px 6px 0 rgba(0, 0, 0, 0.12), 0 5px 12px 4px rgba(0, 0, 0, 0.09);
+}
+
+/*
+.pet-card .ant-card-cover {
+    border-bottom: 2px solid #cc0000;
+}
+
+.pet-card .pet-card-name {
+    border-bottom: 2px solid #cc0000;
+}
+*/
+
+/** since shadow is shown always, need a different effect on hover **/
+.pet-card:hover {
+    opacity: .7;
+    /*box-shadow: 0 5px 12px 4px #cc0000;*/
+}
+
+.pet-card .ant-card-body {
+    padding: 12px 10px; /* was 24px */
+}
+
+.pet-card .pet-card-meta {
+    text-align: center;
+    margin: 0;
+    clear: both;
+}
+
+.pet-card .pet-card-header {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 2px 0 8px 6px;
+}
+
+.pet-card .pet-card-breed {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.pet-card-meta .ant-card-meta-description {
+    color: rgba(0, 0, 0, 0.5); /* going the tiniest bit darker from .45 to .50 */
+}

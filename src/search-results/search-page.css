@@ -1,0 +1,8 @@
+.search-results > h2 {
+    text-align: center;
+    font-size: 2rem;
+}
+
+.search-results > h2 .pets-found {
+    font-weight: lighter;
+}
