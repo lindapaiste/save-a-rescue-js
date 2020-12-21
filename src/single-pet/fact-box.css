@@ -1,8 +1,14 @@
+.facts-section {
+    margin-bottom: 2rem;
+}
+
 .facts-section .bullet {
     padding: 15px;
 }
 
-span.bullet-icon {
+.facts-section .bullet > .icon {
     margin-right: 10px;
     color: #B92020;
 }
+
+/* todo: no min-width if only one item in section */

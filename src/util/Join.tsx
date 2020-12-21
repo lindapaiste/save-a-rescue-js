@@ -8,6 +8,8 @@ export interface Props {
 }
 
 /**
+ * note: does not work if function components are called with JSX, as they will return a `Symbol(react.element)` object instead of just null
+ *
  * cannot return just the React Node because it could be undefined, which is not valid as a component return
  * so always need to wrap in a fragment
  *

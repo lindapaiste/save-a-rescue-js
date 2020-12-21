@@ -1,8 +1,12 @@
 import {AgeGroup, Sex, SizeGroup} from "../strings/enums";
-import {FilterLocation} from "../client/request";
 import {MaybeDogOrCat} from "../strings/species";
 import {BasicOption} from "./fields/options";
+import {ValidUserLocation} from "../location/types";
 
+export enum SearchSort {
+    NEWEST,
+    NEAREST
+}
 
 /**
  * age and size checkbox sections map to a single property
@@ -18,11 +22,15 @@ export interface SearchFormState {
     sex: Sex[];
     breedCats: (string | BasicOption)[];
     breedDogs: (string | BasicOption)[];
+    breed?: never;
     pureBreed?: boolean;
-    distance?: number;
-    location?: FilterLocation;
+    distance?: number | string;
+    location?: ValidUserLocation;
     sizes: SizeGroup[];
     ages: AgeGroup[];
+    org?: string;
+    sort?: SearchSort;
+    hasPic?: boolean;
 }
 
 /**

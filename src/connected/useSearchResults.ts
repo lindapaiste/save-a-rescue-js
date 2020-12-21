@@ -1,12 +1,12 @@
 import {SearchFormState} from "../search-box/types";
 import {useCallback, useEffect, useMemo, useState} from "react";
 import {useDispatch} from "react-redux";
-import {receiveCollection} from "../redux/collections";
-import {client} from "../client";
-import {createKey} from "../client/SearchRequest";
+import {receiveCollection} from "../redux/rgCollections";
+import {client} from "../clientRg";
 import {useCollectionsSelector} from "../redux/store";
-import {FetchHook, useGenericFetch} from "./useRequireEntity";
+import {FetchHook} from "./useRequireEntity";
 import {idsFromCollection, isLoadedAll, isLoadedPage, nextPageNumber} from "../redux/collection-util";
+import {useGenericFetch} from "./useGenericFetch";
 
 export interface SearchReturns extends FetchHook {
     animalIds?: string[];
@@ -29,12 +29,12 @@ export const useSearchResults = (args: Partial<SearchFormState>, enabled: boolea
 
     const dispatch = useDispatch();
 
-    const key = useMemo(
-        () => createKey(args),
-        [args]
+    const request = useMemo(
+        () => client.createSearchRequest(args, page),
+        [args, page]
     );
 
-    const collection = useCollectionsSelector(state => state[key]);
+    const collection = useCollectionsSelector(state => state[request.key]);
 
     const animalIds = idsFromCollection(collection);
 
@@ -43,25 +43,25 @@ export const useSearchResults = (args: Partial<SearchFormState>, enabled: boolea
     const shouldSearch = enabled && !isLoadedPage(collection, page);
 
 
-    console.log({key,collection, shouldSearch});
+    //console.log({key: request.key,collection, shouldSearch});
 
     const execute = useCallback(
         async () => {
-            const response = await client.search(args, page);
+            const response = await request.execute();
             dispatch(receiveCollection({
                 type: 'animals',
-                key,
+                key: request.key,
                 response
             }));
         },
-        [key, args, page, dispatch]
+        [request, dispatch]
     )
 
     const hook = useGenericFetch(execute);
-    const  {load} = hook;
+    const {load} = hook;
 
     useEffect(() => {
-        if ( shouldSearch ) {
+        if (shouldSearch) {
             load();
         }
     }, [load, shouldSearch]);

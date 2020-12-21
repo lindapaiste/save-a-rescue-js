@@ -1,0 +1,23 @@
+/* dos and don'ts */
+.dos-donts .label {
+  color: #b92020;
+}
+
+.dos-donts {
+  font-size: 1.5rem;
+}
+
+.dos-donts .label .text {
+  /* text-transform: uppercase; */
+  /* text-decoration: underline; */
+  /* margin-right: 1rem; */
+  color: black;
+}
+
+.dos-donts .label .text:after {
+  content: ":";
+}
+
+.dos-donts .label .icon {
+  margin-right: 1rem;
+}

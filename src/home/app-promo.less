@@ -1,0 +1,65 @@
+#home-app-promo {
+  background: #f2c24d;
+  padding: 5vw;
+  justify-content: space-between;
+  flex-direction: row;
+}
+
+#home-app-promo .app-promo-info {
+  flex-direction: column;
+  width: 58%;
+}
+
+#home-app-promo .screenshot {
+  width: 38%;
+}
+
+#home-app-promo .app-text {
+  font-size: 1.5rem;
+  margin: 0 2rem;
+  text-align: center;
+}
+
+#home-app-promo .screenshot img,
+#home-app-promo .app-store-button img,
+#home-app-promo h2.app-logo img {
+  width: 100%;
+  height: auto;
+}
+
+#home-app-promo  .app-store-button {
+  width: 20vw;
+  max-width: 367px;
+  min-width: 160px;
+  margin-top: 1rem;
+}
+
+
+@media (min-width: 1024px) {
+  #home-app-promo .app-text {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 600px) {
+  #home-app-promo {
+    flex-direction: column;
+  }
+  #home-app-promo .screenshot,
+  #home-app-promo .app-promo-info {
+    width: 100%;
+  }
+  #home-app-promo .screenshot {
+    margin-bottom: 3vw;
+  }
+  #home-app-promo .screenshot img {
+    max-height: 40vh;
+    max-width: 70vw;
+    width: auto;
+    height: auto;
+  }
+  #home-app-promo .paw-print-icon {
+    display: none;
+  }
+
+}

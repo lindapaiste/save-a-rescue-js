@@ -4,7 +4,8 @@ import {Button} from "antd";
 import React from "react";
 import SyncOutlined from "@ant-design/icons/SyncOutlined";
 import {AxiosError} from "axios";
-import {ErrorResponseBody} from "../client/response";
+import {RgErrorResponseBody} from "../clientRg/response";
+import {isNullOrUndefined} from "util";
 
 /**
  * error from fetching includes a `Retry` button
@@ -21,6 +22,9 @@ export const FetchError = ({error, load, title}: Pick<FetchHook, 'error' | 'load
 }
 
 export const extractMessage = (error: any): string | undefined => {
+    if ( ! error ) {
+        return undefined;
+    }
     if ( isRgAxiosError(error) ) {
         const array = error?.response?.data?.errors;
         if ( array?.length ) {
@@ -34,6 +38,11 @@ export const extractMessage = (error: any): string | undefined => {
     }
 }
 
-const isRgAxiosError = (error: any): error is AxiosError<ErrorResponseBody> => {
-    return ( "response" in error && "data" in error.response && "errors" in error.response.data );
+const isRgAxiosError = (error: any): error is AxiosError<RgErrorResponseBody> => {
+    //using try/catch because malformed errors were throwing all sorts of things
+    try {
+        return (typeof error === "object" && "response" in error && "data" in error.response && "errors" in error.response.data);
+    } catch (e) {
+        return false;
+    }
 }

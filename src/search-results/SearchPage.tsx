@@ -1,13 +1,18 @@
 import {SearchFormState} from "../search-box/types";
-import React, {useState} from "react";
+import React, {useEffect} from "react";
 import {SearchHeader} from "../search-box/SearchHeader";
 import {RenderSearchResults} from "./SearchResults";
 import {EITHER_VAL} from "../strings/species";
-import {stateToSearch, usePetZipQueryParams} from "../routing/usePetZipQueryParams";
-import {useSeoTitle} from "./useSeoTitle";
-import {FilterLocation} from "../client/request";
+import {usePetZipQueryParams} from "../routing/usePetZipQueryParams";
 import {useSearchResults} from "../connected/useSearchResults";
 import {useHistory, useLocation} from "react-router-dom";
+import {useSearchSeoTitle} from "../seo/useSearchSeoTitle";
+import {stateToSearch, useSearchParams} from "../routing/useSearchParams";
+import {useCanonical} from "../seo/useCanonical";
+import {useDispatch} from "react-redux";
+import {nestedActions} from "../redux/store";
+import {ResultsFormat} from "./FormatSwitch";
+import {Placement} from "../pet-card/types";
 
 // TODO: access values via url navigation
 
@@ -53,8 +58,11 @@ export const SearchRoute = () => {
 }
 
 
-export const SearchPage = ({initialValues}: {initialValues: SearchFormState}) => {
-    const [formVal, setFormVal] = useState<SearchFormState>(initialValues);
+export const SearchPage = ({initialValues, initialFormat = "card"}: { initialValues: SearchFormState, initialFormat?: ResultsFormat }) => {
+    //const [formVal, setFormVal] = useState<SearchFormState>(initialValues);
+
+    const formVal = useSearchParams();
+
 
     const results = useSearchResults(formVal, !!formVal.location);
 
@@ -64,23 +72,29 @@ export const SearchPage = ({initialValues}: {initialValues: SearchFormState}) =>
     const history = useHistory();
     const location = useLocation();
 
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        console.debug("location changed");
+        dispatch(nestedActions.lastSearch.didSearch(location));
+    }, [dispatch, location]);
+
     const onValuesChange = (changedValues: Partial<SearchFormState>, values: SearchFormState) => {
-
-        console.log({changedValues, values});
-
-        setFormVal(values);
 
         history.replace({
             ...location,
             search: stateToSearch(values),
             state: values,
         });
+
     }
 
-    useSeoTitle({
+    useSearchSeoTitle({
         species: formVal.species,
-        zip: getZip(formVal.location)
+        zip: formVal.location?.zip,
     })
+
+    useCanonical();
 
     return (
         <div className="search-page">
@@ -90,17 +104,10 @@ export const SearchPage = ({initialValues}: {initialValues: SearchFormState}) =>
             />
             <RenderSearchResults
                 {...results}
-                previous={{
-                    type: 'search',
-                    state: formVal,
-                }}
+                species={formVal.species}
+                initialFormat={initialFormat}
+                placement={Placement.SEARCH_ADOPTABLE}
             />
         </div>
     )
-}
-
-export const getZip = (location?: FilterLocation): string | undefined => {
-    if (location && 'postalcode' in location) {
-        return location.postalcode.toString();
-    }
 }

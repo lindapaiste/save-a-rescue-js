@@ -1,0 +1,127 @@
+a.sar-pet-service {
+  display: block;
+  flex: 1 1 300px;
+  margin: 1vmax;
+  transition: all 1s ease-in;
+  overflow: hidden;
+  transform: perspective(200px) translate3d(0, 0, 0);
+  border-radius: 10px;
+  line-height: 0;
+  height: auto;
+  box-shadow: 2px 2px 9px 1px #560707cc;
+}
+
+a.sar-pet-service .sar-inner {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+}
+
+a.sar-pet-service .sar-inner {
+  /*background-color: rgba(1,1,1,.4);*/
+}
+
+a.sar-pet-service h2:after {
+  content: '';
+  display: block;
+  height: 0;
+  width: 0;
+  position: absolute;
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+  background-color: #b30000;
+}
+
+a.sar-pet-service img.background {
+  width: 100%;
+  height: auto;
+}
+
+a.sar-pet-service .icon-wrapper {
+    flex: 1;
+}
+
+a.sar-pet-service .sar-inner img {
+  display: block;
+  width: 20%;
+  height: auto;
+  margin: 5% auto;
+  opacity: .65;
+  transform: perspective(200px) translate3d(0, 0, -2vmax);
+}
+
+a.sar-pet-service h2 {
+  text-align: center;
+  line-height: 1;
+  margin: 0;
+  opacity: .9;
+  color: #fff;
+  font-family: inherit;
+  font-variant: small-caps;
+  font-size: 1.5rem;
+  text-shadow: 1px 1px 4px #000000;
+  width: 100%;
+  background: #0000006b;
+  padding: .5rem .5rem 1rem .5rem;
+}
+
+/*Pet Services Hover Effects*/
+
+a.sar-pet-service:hover {
+  cursor: pointer;
+}
+
+a.sar-pet-service:hover img.background {
+  transform: perspective(200px) translate3d(-1vmax, 0, 2vmax);
+  transition: all 1s ease;
+}
+
+
+a.sar-pet-service:hover .sar-inner {
+  background: rgba(0, 0, 0, .1);
+  transition: all .3s ease-in;
+}
+
+a.sar-pet-service:hover h2:after {
+  width: 75%;
+  height: 4px;
+  transition: all .3s ease-in;
+}
+
+a.sar-pet-service:hover .sar-inner img {
+  opacity: 1;
+  transform: perspective(200px) translate3d(0, 0, 0);
+  transition: all .5s ease-out;
+}
+
+a.sar-pet-service:hover h2 {
+  opacity: 1;
+  transition: opacity .3s ease-out;
+}
+
+//TODO: box-shadow on hover
+
+/* media queries MUST match breakpoints on slick settings */
+/*
+a.sar-pet-service {
+    width: 33.33%;
+    box-sizing: border-box;
+}
+@media (max-width: 620px) {
+    a.sar-pet-service {
+        width: 50%;
+    }
+}
+@media (max-width: 480px) {
+    a.sar-pet-service {
+        width: 100%;
+    }
+}
+*/

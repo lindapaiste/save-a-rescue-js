@@ -72,11 +72,11 @@ li.ant-list-item {
     line-height: 2rem;
 }
 
-.pet-profile .sex-icon {
-    color: #cc0000;
+.pet-profile .sex .icon {
+    color: #B92020;
 }
 
-.pet-profile .sex-icon,
+.pet-profile .sex .icon,
 .pet-profile .age-number {
     font-size: 120%;
 }
@@ -90,7 +90,7 @@ li.ant-list-item {
 }
 
 .pet-profile .back a {
-    color: #cc0000;
+    color: #B92020;
 }
 
 .pet-profile .back .icon {
@@ -108,18 +108,38 @@ li.ant-list-item {
 }
 
 .recent-pet {
-    flex: 1 1 100px;
     max-width: 150px;
-    margin: 0 15px;
-}
-
-a .recent-pet {
-    color: #cc0000;
-    font-weight: bold;
-    text-align: center;
-    font-size: 1.2rem;
+    margin: 0 10px;
 }
 
 .recent-pet .image {
     border-radius: 10px;
+    box-shadow: 2px 2px 3px 2px #e8e8e8;
+}
+
+.recent-pet .name {
+    /*color: #B92020;*/
+    color: black;
+    /*font-weight: bold;*/
+    text-align: center;
+    font-size: 1.2rem;
+    border-bottom: 2px solid #B92020;
+}
+
+@media (max-width: 380px) {
+    .recent-pet {
+        width: calc(50% - 30px);
+    }
+}
+
+@media (min-width: 380px) {
+    .recent-pet {
+        width: calc(33.3% - 30px);
+    }
+}
+
+@media (min-width: 565px) {
+    .recent-pet {
+        width: calc(25% - 30px);
+    }
 }

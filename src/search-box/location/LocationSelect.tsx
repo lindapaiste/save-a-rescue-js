@@ -1,13 +1,18 @@
-import {FilterLocation} from "../../client/request";
+import {FilterLocation} from "../../clientRg/request";
 import React, {ComponentType, useEffect, useState} from "react";
 import {UnionToAnyOf} from "@lindapaiste/ts-helpers";
-import {GeoLocation, useGeoLocation} from "../../connected/useGeoLocationRedux";
+import {GeoLocation, useGeoLocation} from "../../location/useGeoLocation";
 import {RenderLocationSelect} from "./RenderWithButton";
-import {normalizeZip} from "./ZipCodeInput";
+import {flatActions, useSelector} from "../../redux/store";
+import {latestLocation} from "../../redux/location";
+import {isLatLon, isZip, normalizeZip} from "../../location/validation";
+import {LatLon, ValidUserLocation} from "../../location/types";
+import {useDispatch} from "react-redux";
+import {useUserLocation} from "../../location/useUserLocation";
 
 export interface Props {
-    value?: UnionToAnyOf<FilterLocation>;
-    onChange?: (loc: FilterLocation) => void;
+    value?: UnionToAnyOf<ValidUserLocation>;
+    onChange?: (loc: ValidUserLocation) => void;
     Render?: ComponentType<RenderProps>;
 }
 
@@ -21,12 +26,12 @@ export interface RenderProps extends GeoLocation {
 
     isGeoSelected: boolean;
     isZipSelected: boolean;
+    zip?: string;
+    setZip: (zip: string) => void;
 }
 
-export const LocationSelect = ({
-                                   value, onChange = () => {
-    }, Render = RenderLocationSelect
-                               }: Props) => {
+export const LocationSelect = ({value, onChange = () => {
+    }, Render = RenderLocationSelect}: Props) => {
 
     /**
      * whichever was more recently clicked/focused, regardless of validation
@@ -38,7 +43,18 @@ export const LocationSelect = ({
      * zip is now stored in redux, only after it has passed validation
      */
     const geo = useGeoLocation();
-    const {loadLocation, latLon, zip} = geo;
+    const {loadLocation} = geo;
+    const zip = useSelector(state => latestLocation(state.location, isZip))?.zip;
+    const latLon = useSelector(state => latestLocation<LatLon>(state.location, isLatLon));
+
+    /**
+     * need to trigger ip fetching
+     */
+    const latest = useUserLocation();
+    console.log(zip);
+
+    const dispatch = useDispatch();
+    const setZip = (zip: string) => dispatch(flatActions.enterZip({timestamp: Date.now(), zip, source: 'input'}));
 
     /**
      * updates selection and triggers location loading
@@ -64,12 +80,12 @@ export const LocationSelect = ({
         const normalized = zip ? normalizeZip(zip) : undefined;
 
         if (selected === 'zip' && normalized) {
-            onChange({postalcode: normalized});
+            onChange({zip: normalized});
         } else {
             if (latLon) {
                 onChange(latLon);
             } else if (normalized) {
-                onChange({postalcode: normalized});
+                onChange({zip: normalized});
             }
         }
     }, [latLon, selected, zip]);
@@ -77,6 +93,8 @@ export const LocationSelect = ({
     return (
             <Render
                 {...geo}
+                zip={zip}
+                setZip={setZip}
                 onClickGeo={handleButtonClick}
                 onFocusZip={handleZipFocus}
                 isGeoSelected={selected === "geo"}

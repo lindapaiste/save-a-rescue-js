@@ -1,0 +1,20 @@
+.fact-bar-title {
+    text-transform: uppercase;
+    font-size: .7rem;
+    letter-spacing: 1px;
+}
+
+.fact-bar {
+    padding: 15px;
+}
+
+.fact-bar-label {
+    text-align: center;
+    font-weight: bold;
+    font-size: .8rem;
+    margin-top: 3px;
+}
+
+.fact-bar .bar-rate {
+    max-width: 150px;
+}

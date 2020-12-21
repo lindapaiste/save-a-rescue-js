@@ -1,29 +1,15 @@
-import React, {PropsWithChildren, ReactNode} from "react";
-import {Link, useHistory, useLocation} from "react-router-dom";
-import {AppPage, petProfile} from "./paths";
+import React, {PropsWithChildren} from "react";
+import {Link} from "react-router-dom";
+import {petProfile} from "./paths";
 
-export interface PropPreviousPage {
-    previous?: AppPage;
-}
+export type Props = PropsWithChildren<{ id: string }> & React.RefAttributes<HTMLAnchorElement>
 
-export type Props = PropsWithChildren<PropPreviousPage> & {id: string}
-
-export const PetLink = ({children, previous, id}: Props) => {
+export const PetLink = ({id, ...props}: Props) => {
     return (
         <Link
-            to={{
-                pathname: petProfile(id),
-                state: {
-                    previous
-                }
-            }}
-        >
-            {children}
-        </Link>
+            {...props}
+            to={petProfile(id)}
+            className={"pet-profile-link"}
+        />
     )
-}
-
-export const usePreviousPage = (): AppPage | undefined => {
-    const {state} = useLocation<PropPreviousPage | undefined>();
-    return state?.previous;
 }

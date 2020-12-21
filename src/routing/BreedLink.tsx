@@ -1,7 +1,7 @@
 import React from "react";
 import {Link} from "react-router-dom";
 import {useEntitiesSelector} from "../redux/store";
-import {getAttribute} from "../redux/selectors";
+import {getAttribute} from "../redux/rgSelectors";
 
 //TODO: actual link
 export const BreedLink = ({id}: {id: string}) => {

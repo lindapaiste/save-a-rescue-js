@@ -1,10 +1,10 @@
 import {breedsKey, DogOrCat} from "../strings/species";
 import {useEffect, useState} from "react";
 import {useSelector} from "../redux/store";
-import {getAllBreeds} from "../redux/selectors";
+import {getAllBreeds} from "../redux/rgSelectors";
 import {useDispatch} from "react-redux";
-import {collectionsSlice} from "../redux/collections";
-import {client} from "../client";
+import {rgCollectionsSlice} from "../redux/rgCollections";
+import {client} from "../clientRg";
 
 /**
  * hook to load individual species breeds
@@ -14,6 +14,7 @@ export const useBreeds = (species: DogOrCat) => {
     const [isLoading, setIsLoading] = useState(true);
 
     const breeds = useSelector(getAllBreeds(species));
+    //console.log(breeds.map(breed => breed.value + '\t' + breed.label ).join('\n'))
 
     const shouldLoad = !breeds.length;
 
@@ -22,8 +23,11 @@ export const useBreeds = (species: DogOrCat) => {
     useEffect(() => {
         const requestBreeds = async () => {
             setIsLoading(true);
+            /**
+             * can handle the sorted in the API call or before storing
+             */
             const response = await client.getBreeds(species);
-            dispatch(collectionsSlice.actions.receiveCollection({
+            dispatch(rgCollectionsSlice.actions.receiveCollection({
                 response,
                 type: 'breeds',
                 key: breedsKey(species)

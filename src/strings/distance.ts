@@ -5,8 +5,9 @@ import round from "lodash/round";
  * round to a whole number unless less than 1 mile
  */
 export const milesAway = (distance: number) => {
-    const s = distance > 1 ? 's' : ''; // plural only if > 1
-    const number = distance < 1 ? '< 1' : round(distance); // show < 1 instead of 0
+    const rounded = round(distance);
+    const s = rounded > 1 ? 's' : ''; // plural only if > 1
+    const number = distance < 1 ? '< 1' : rounded; // show < 1 instead of 0
     return `${number} mile${s} away`;
 }
 

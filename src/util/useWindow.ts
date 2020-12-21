@@ -1,4 +1,4 @@
-import {Size} from "../single-pet/media/types";
+import {Size} from "../media/types";
 import {useEffect, useState} from "react";
 
 export const useWindow = (): Size => {

@@ -10,7 +10,7 @@ export interface RescueOrg {
         zip: string;
         country: string;
         lat: number;
-        lon: number;
+        lng: number;
     }
     phone: string | null;
     email: string | null;

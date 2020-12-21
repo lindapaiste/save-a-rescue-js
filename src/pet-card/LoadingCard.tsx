@@ -1,5 +1,5 @@
 import {Card, Skeleton} from "antd";
-import {SquareWrapper} from "../single-pet/media/SquareImage";
+import {SquareWrapper} from "../media/SquareImage";
 import React from "react";
 
 export const LoadingCard = () => {

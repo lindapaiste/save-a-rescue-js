@@ -1,34 +1,17 @@
-import {SrcSet} from "../single-pet/media/SrcSetImage";
 import {Avatar, Card} from 'antd';
 import React from "react";
 import isEmpty from "lodash/isEmpty";
-import {SquareImage} from "../single-pet/media/SquareImage";
-import {MaybeDogOrCat} from "../strings/species";
+import {SquareImage} from "../media/SquareImage";
 import "./card-style.css";
 import {DistanceCityState, distanceOrLocation, milesAway} from "../strings/distance";
 import {isDefined} from "@lindapaiste/ts-helpers";
+import {PetCardProps} from "./types";
 
 const {Meta} = Card;
 
-/**
- * at this point I am mostly trying to figure out what props are needed here
- *
- * Ant Design has a nice loading card
- */
+//TODO: "Pick Me" on hover
 
-export interface Props {
-    id: string;
-    name: string;
-    breeds: string[];
-    coat?: string;
-    age?: string;
-    sex?: string;
-    distance?: number;
-    citystate?: string;
-    image?: SrcSet;
-    avatar?: string;
-    species?: MaybeDogOrCat; //TODO: use for age and fallback image
-}
+//TODO: banner with "3 hours ago" / "3 days ago" on recents
 
 /**
  * want undefined to be an empty string instead of "undefined"
@@ -37,18 +20,20 @@ export const string = (value: string | undefined): string => {
     return value ? value : '';
 }
 
+
+
 /**
  * needs to accept the possibility that many properties could possibly be undefined in edge cases
  *
  * moved the Link out and up in order to include "from" args
  */
-export const PetCard = ({id, name, breeds, coat, age, sex, image, avatar, distance, citystate, ...props}: Props) => {
+export const PetCard = ({horizontal = false, id, name, breeds, coat, age, sex, image, avatar, distance, citystate, placement, ...props}: PetCardProps) => {
     return (
         <Card
             hoverable
             cover={image ? <SquareImage {...image}/> : <div/>}
             //title={name}
-            className="pet-card"
+            className={`pet-card ${horizontal ? "horizontal" : "vertical"} ${placement}`}
             bordered={false}
         >
             <Meta
@@ -65,13 +50,15 @@ export const PetCard = ({id, name, breeds, coat, age, sex, image, avatar, distan
                     <div className="pet-card-breed">{breeds.join(" / ")}</div>
                         )}
                     {(!!age || !!sex) && (
-                        <div className="pet-card-age-sex">{`${string(age)} ${string(sex)}`}</div>
+                        <div className="pet-card-age-sex">{`${string(age)} ${string(sex)}`.trim()}</div>
                     )}
                     {isDefined(citystate) && (
-                        <div className="pet-card-location">{citystate}</div>
-                    )}
-                    {isDefined(distance) && (
-                        <div className="pet-card-distance">{milesAway(distance)}</div>
+                        <div className="pet-card-location">
+                            {isDefined(distance) && (
+                                <div className="pet-card-distance">{milesAway(distance)}</div>
+                            )}
+                            {citystate}
+                        </div>
                     )}
                 </>}
             />
@@ -80,8 +67,6 @@ export const PetCard = ({id, name, breeds, coat, age, sex, image, avatar, distan
 }
 
 //TODO: fallback avatar
-
-//TODO: enforce consistent casing on city, state
 
 /**
  * show distance if location is known, or pet city and state otherwise

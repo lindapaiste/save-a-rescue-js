@@ -1,4 +1,4 @@
-import {Species} from "../client/attributes";
+import {Species} from "../clientRg/attributes";
 import {Nullable} from "@lindapaiste/ts-helpers";
 
 export enum DogOrCat {
@@ -73,7 +73,10 @@ export const speciesLabel = (species: MaybeDogOrCat | undefined, label: keyof Sp
     }
 }
 
-export const slugToId = (slug: Nullable<string>): MaybeDogOrCat => {
+export function slugToId (slug: SpeciesSlug): DogOrCat
+export function slugToId (slug: null | undefined): EitherVal
+export function slugToId (slug: Nullable<string>): MaybeDogOrCat
+export function slugToId (slug: Nullable<string>): MaybeDogOrCat {
     switch (slug) {
         case "cats":
             return DogOrCat.CAT;
@@ -84,7 +87,11 @@ export const slugToId = (slug: Nullable<string>): MaybeDogOrCat => {
     }
 }
 
-export const idToSlug = (id: Nullable<string>): SpeciesSlug | undefined => {
+//if id extends DogOrCat then won't be undefined
+export function idToSlug (id: DogOrCat ): SpeciesSlug
+export function idToSlug (id: null | undefined | EitherVal ): undefined
+export function idToSlug (id: Nullable<string>): SpeciesSlug | undefined
+export function idToSlug (id: Nullable<string>): SpeciesSlug | undefined {
     switch (id) {
         case DogOrCat.CAT:
             return "cats";

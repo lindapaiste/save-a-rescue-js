@@ -3,7 +3,9 @@ import {ConnectedPetCard} from "../connected/ConnectedPetCard";
 import React from "react";
 import range from "lodash/range";
 import {LoadingCard} from "../pet-card/LoadingCard";
-import {PetLink, PropPreviousPage} from "../routing/PetLink";
+import {ConnectedPetTile, LoadingPetTile} from "../connected/ConnectedPetTile";
+import {ResultsFormat} from "./FormatSwitch";
+import {Placement} from "../pet-card/types";
 
 export interface Props {
     animalIds: string[];
@@ -12,26 +14,57 @@ export interface Props {
      * have more control
      */
     loading?: false | number;
+    format?: ResultsFormat;
+    placement: Placement;
 }
 
 // TODO: deal with jumping offset position
-export const ResultsGrid = ({animalIds, loading = false, previous}: Props & PropPreviousPage) => {
+export const ResultsGrid = ({animalIds, loading = false, format = "card", placement}: Props) => {
+    const breakpoints = format === "list" ? {
+        xs: 24
+    } : placement === Placement.HOME_PAGE ? {
+        xs: 6,
+    } : {
+        xs: 24,
+        sm: 12,
+        md: 8,
+        xxl: 6
+    }
+
     return (
         <>
-            <Row gutter={[32, 32]}>
+            <Row gutter={[32, 32]} className="search-grid">
                 {animalIds.map(id => (
-                    <Col xs={24} sm={12} md={8} xxl={6} key={id}>
-                        <PetLink
+                    <Col {...breakpoints} key={id}>
+                        <ConnectedPetCard
                             id={id}
-                            previous={previous}
-                        >
-                            <ConnectedPetCard id={id}/>
-                        </PetLink>
+                            horizontal={format === "list"}
+                            placement={placement}
+                        />
                     </Col>
                 ))}
                 {loading !== false && range(0, loading).map(i => (
-                    <Col xs={24} sm={12} md={8} xxl={6} key={i}>
+                    <Col {...breakpoints} key={i}>
                         <LoadingCard/>
+                    </Col>
+                ))}
+            </Row>
+        </>
+    );
+}
+
+export const ResultsPhotos = ({animalIds, loading = false}: Props) => {
+    return (
+        <>
+            <Row gutter={[4, 4]}>
+                {animalIds.map(id => (
+                    <Col span={8} xxl={6} key={id}>
+                        <ConnectedPetTile id={id}/>
+                    </Col>
+                ))}
+                {loading !== false && range(0, loading).map(i => (
+                    <Col span={8} xxl={6} key={i}>
+                        <LoadingPetTile/>
                     </Col>
                 ))}
             </Row>

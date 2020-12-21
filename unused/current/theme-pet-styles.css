@@ -1,0 +1,25 @@
+
+.rgtkSearchForm label {
+    display: inline;
+}
+
+#rgtkSearchLocationField_0 {
+    width: 100px;
+    display: inline;
+}
+
+#rgtkSearchFormSubFieldTable_0 {
+    width:650px;
+}
+
+.rgtkSearchPetPic {
+    background-image: none !important;
+    width: auto !important;
+    height: auto !important;
+}
+
+.rgtkSearchPetPicImg {
+    display: block !important;
+    width: 225px;
+    height: auto;
+}

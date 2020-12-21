@@ -1,0 +1,22 @@
+/**
+* replacements for inline styles
+ */
+
+#rgtkPetPicturePrimaryContainer_0 {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.rgtkPetPicturePrimary {
+    width: fit-content;
+}
+
+
+/**
+* additions
+ */
+
+.rgtkPetExtraMediaPicture {
+    height: 100px;
+    width: auto;
+}

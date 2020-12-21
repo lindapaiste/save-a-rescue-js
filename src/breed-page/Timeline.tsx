@@ -1,5 +1,6 @@
 import { Timeline } from "antd";
 import React, { ReactNode } from "react";
+import "./timeline.css";
 
 export interface TimelineItem {
   title?: string;

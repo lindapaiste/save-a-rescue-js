@@ -1,4 +1,4 @@
-import {Animal} from "../client/attributes";
+import {Animal} from "../clientRg/attributes";
 import React, {ReactNode} from "react";
 import {Col, Row} from "antd";
 import CheckCircleOutlined from "@ant-design/icons/CheckCircleOutlined";
@@ -12,9 +12,10 @@ import {
     obedienceTrainingValues,
     vocalLevelValues
 } from "../strings/enums";
-import {EnumBar} from "./DiscreteBar";
+import {EnumBar} from "./FactBar";
 import "./fact-box.css";
 import {PropSpecies, speciesLabel} from "../strings/species";
+import {IconAndText} from "../util/IconAndText";
 
 /**
  * for each fact, want to skip over if not set
@@ -26,17 +27,25 @@ export interface SectionProps {
     children?: ReactNode;
 }
 
-export const FactsSection = ({slug, title, children}: SectionProps) => {
-    const hasChildren = !! children; // this doesn't work because children is always an array or react element objects, even if the element renders null
-    //console.log({title, children});
-    if ( ! hasChildren ) {
+/**
+ * Cannot use children because children prop is special -- always an array of react element objects, even if the
+ * element renders null.  For the same reason, must call function components as functions rather than with JSX.
+ */
+export const ConditionalFactsSection = ({slug, title, facts}: SectionProps & { facts: ReactNode[] }) => {
+    const filtered = facts.filter(f => !!f);
+    //console.log(facts, filtered);
+    if (filtered.length < 1) {
         return null;
     }
     return (
         <div className={`facts-section ${slug}`}>
             <h3>{title}</h3>
             <Row>
-                {children}
+                {filtered.map((node, i) => ( //TODO get key from node, but have to TS check
+                    <Col key={i} xs={12} sm={8} md={24} lg={12}>
+                        {node}
+                    </Col>
+                ))}
             </Row>
         </div>
     )
@@ -44,36 +53,37 @@ export const FactsSection = ({slug, title, children}: SectionProps) => {
 
 export const Personality = (props: Partial<Animal>) => {
     return (
-        <FactsSection
-            slug="personality"
+        <ConditionalFactsSection
             title="My Personality"
-            >
-            <EnumBar
-                title="Activity Level"
-                value={props.activityLevel}
-                ordered={activityLevelValues}
-            />
-            <EnumBar
-                title="Energy Level"
-                value={props.energyLevel}
-                ordered={energyLevelValues}
-            />
-            <EnumBar
-                title="Vocal Level"
-                value={props.vocalLevel}
-                ordered={vocalLevelValues}
-            />
-            <EnumBar
-                title="Obedience"
-                value={props.obedienceTraining}
-                ordered={obedienceTrainingValues}
-            />
-            <EnumBar
-                title="Likes Strangers"
-                value={props.newPeopleReaction}
-                ordered={newPeopleReactionValues}
-            />
-        </FactsSection>
+            slug="personality"
+            facts={[
+                EnumBar({
+                    title: "Activity Level",
+                    value: props.activityLevel,
+                    ordered: activityLevelValues,
+                }),
+                EnumBar({
+                    title: "Energy Level",
+                    value: props.energyLevel,
+                    ordered: energyLevelValues,
+                }),
+                EnumBar({
+                    title: "Vocal Level",
+                    value: props.vocalLevel,
+                    ordered: vocalLevelValues,
+                }),
+                EnumBar({
+                    title: "Obedience",
+                    value: props.obedienceTraining,
+                    ordered: obedienceTrainingValues,
+                }),
+                EnumBar({
+                    title: "Likes Strangers",
+                    value: props.newPeopleReaction,
+                    ordered: newPeopleReactionValues,
+                }),
+            ]}
+        />
     )
 }
 
@@ -123,37 +133,39 @@ const fenceString = (value: FenceNeeds): string => {
 
 export const Health = (props: Partial<Animal>) => {
     return (
-        <FactsSection
+        <ConditionalFactsSection
             slug="health"
-            title="My Health">
-            <BooleanBullet
-                value={props.isSpecialNeeds}
-                ifTrue="Special Needs"
-            />
-            <BooleanBullet
-                value={props.isAltered}
-                ifTrue={props.sex === "Female" ? "Spayed" : props.sex === "Male" ? "Neutered" : "Fixed"}
-            />
-            <BooleanBullet
-                value={props.isDeclawed}
-                ifTrue="Declawed"
-            />
-            <BooleanBullet
-                value={props.isMicrochipped}
-                ifTrue="Microchipped"
-            />
-            <BooleanBullet
-                value={props.isCurrentVaccinations}
-                ifTrue="Vaccinations up-to-date"
-            />
-        </FactsSection>
+            title="My Health"
+            facts={[
+                BooleanBullet({
+                    value: props.isSpecialNeeds,
+                    ifTrue: "Special Needs",
+                }),
+                BooleanBullet({
+                    value: props.isAltered,
+                    ifTrue: props.sex === "Female" ? "Spayed" : props.sex === "Male" ? "Neutered" : "Fixed",
+                }),
+                BooleanBullet({
+                    value: props.isDeclawed,
+                    ifTrue: "Declawed",
+                }),
+                BooleanBullet({
+                    value: props.isMicrochipped,
+                    ifTrue: "Microchipped",
+                }),
+                BooleanBullet({
+                    value: props.isCurrentVaccinations,
+                    ifTrue: "Vaccinations up-to-date",
+                }),
+            ]}
+        />
     )
 }
 
 /**
  * doing it this way in order to group yes and nos together
  */
-const GoodWith = (props: Partial<Animal>) => {
+const GoodWith = (props: Partial<Animal>): ReactNode[] => {
     let yes: string[] = [];
     let no: string[] = [];
 
@@ -176,88 +188,58 @@ const GoodWith = (props: Partial<Animal>) => {
     helper(props.isDogsOk, "Dogs");
     helper(props.isFarmAnimalsOk, "Farm Animals");
 
-    return (
-        <>
-            {yes.map(str => (
-                <Bullet
-                    key={str}
-                    title={str + " OK"}
-                />
-            ))}
-            {no.map(str => (
-                <Bullet
-                    key={str}
-                    title={"No " + str}
-                    icon={<CloseCircleOutlined/>}
-                />
-            ))}
-        </>
-    )
+    return [
+        ...yes.map(str => (
+            <Bullet
+                key={str}
+                title={str + " OK"}
+            />
+        )),
+        ...no.map(str => (
+            <Bullet
+                key={str}
+                title={"No " + str}
+                icon={<CloseCircleOutlined/>}
+            />
+        ))
+    ]
 }
 
-export const IdealHome = (props: Partial<Animal> & PropSpecies ) => {
+export const IdealHome = (props: Partial<Animal> & PropSpecies) => {
     return (
-        <FactsSection
+        <ConditionalFactsSection
             slug="ideal-home"
             title="My Ideal Home"
-        >
-                {props.ownerExperience === "Species" && (
+            facts={[
+                props.ownerExperience === "Species" && (
                     <Bullet
                         title={`Experienced ${speciesLabel(props.species, 'singular')} Owner`}
                     />
-                )}
-                {props.ownerExperience === "Breed" && (
+                ),
+                props.ownerExperience === "Breed" && (
                     <Bullet
                         title="Owner with Breed Experience"
                     />
-                )}
-            {isDefined(props.indoorOutdoor) && (
-                <Bullet
-                    title={props.indoorOutdoor}
-                />
-            )}
-            {isDefined(props.isYardRequired) && (
-                <Bullet
-                    title={props.isYardRequired ? "Yard Required" : "Yard Not Required"}
-                />
-            )}
-            {isDefined(props.fenceNeeds) && (
-                <Bullet
-                    title={fenceString(props.fenceNeeds as FenceNeeds)}
-                />
-            )}
-            <GoodWith {...props} />
-        </FactsSection>
+                ),
+                isDefined(props.indoorOutdoor) && (
+                    <Bullet
+                        title={props.indoorOutdoor}
+                    />),
+                isDefined(props.isYardRequired) && (
+                    <Bullet
+                        title={props.isYardRequired ? "Yard Required" : "Yard Not Required"}
+                    />
+                ),
+                isDefined(props.fenceNeeds) && (
+                    <Bullet
+                        title={fenceString(props.fenceNeeds as FenceNeeds)}
+                    />
+                ),
+                ...GoodWith(props),
+            ]}
+        />
     )
 }
-
-/*
-            {isDefined(props.adultSexesOk) && props.adultSexesOk !== "All" && (
-                <Bullet
-                    title={props.adultSexesOk} //"Men Only" or "Women Only"
-                />
-            )}
-            <IsOkHelper
-                name="Kids"
-                value={props.isKidsOk}
-            />
-            <IsOkHelper
-                name="Seniors"
-                value={props.isSeniorsOk}
-            />
-            <IsOkHelper
-                name="Cats"
-                value={props.isCatsOk}
-            />
-            <IsOkHelper
-                name="Dogs"
-                value={props.isDogsOk}
-            />
-            <IsOkHelper
-                name="Farm Animals"
-                value={props.isFarmAnimalsOk}
-            />
- */
 
 export interface BulletData {
     title: ReactNode;
@@ -265,9 +247,8 @@ export interface BulletData {
 }
 
 export const Bullet = ({title, description, icon = <CheckCircleOutlined/>}: BulletData & { icon?: ReactNode }) => (
-    <Col xs={12} sm={8} md={24} lg={12} className="bullet">
-        <span className="bullet-icon">{icon}</span>
-        <span className="bullet-title">{title}</span>
+    <span className="bullet">
+        <IconAndText icon={icon} text={title}/>
         {!!description && <div className="bullet-description">{description}</div>}
-    </Col>
+    </span>
 )

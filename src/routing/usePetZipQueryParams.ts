@@ -1,11 +1,10 @@
 import {useLocation} from "react-router-dom";
 import {idToSlug, MaybeDogOrCat, slugToId} from "../strings/species";
-import {isValidZip} from "../search-box/location/ZipCodeInput";
 import {useDispatch} from "react-redux";
 import {locationSlice} from "../redux/location";
 import {SearchFormState} from "../search-box/types";
-import {getZip} from "../search-results/SearchPage";
 import {useMemo} from "react";
+import {isValidZip} from "../location/validation";
 
 /**
  * when going from the home page to the search page, get the species and zip code from the URL
@@ -20,13 +19,17 @@ export const usePetZipQueryParams = (): Partial<SearchFormState> => {
     /**
      * only run once -- don't need to respond to changes
      */
-    return useMemo( () => {
-        const values = searchToState(location.search);
+    return useMemo(() => {
+        const values = searchToState_(location.search);
 
-        const zip = getZip(values.location);
+        const zip = values.location?.zip;
 
         if (!!zip && isValidZip(zip)) {
-            dispatch(locationSlice.actions.enterZip(zip));
+            dispatch(locationSlice.actions.enterZip({
+                zip,
+                source: 'url',
+                timestamp: Date.now(),
+            }));
         }
 
         return {
@@ -50,13 +53,13 @@ export const createState = ({species, zip}: CreateProps): Partial<SearchFormStat
     values.species = slugToId(species);
     if (!!zip && isValidZip(zip)) {
         values.location = {
-            postalcode: zip
+            zip
         };
     }
     return values;
 }
 
-export const searchToState = (search: string): Partial<SearchFormState> => {
+export const searchToState_ = (search: string): Partial<SearchFormState> => {
     const params = new URLSearchParams(search);
     const values: Partial<SearchFormState> = {};
     const pet = params.get('pet');
@@ -65,19 +68,20 @@ export const searchToState = (search: string): Partial<SearchFormState> => {
     const zip = params.get('zip');
     if (!!zip && isValidZip(zip)) {
         values.location = {
-            postalcode: zip
+            zip
         };
     }
+
     return values;
 }
 
-export const stateToSearch = (state: Partial<SearchFormState> = {}): string => {
+export const stateToSearch_ = (state: Partial<SearchFormState> = {}): string => {
     const params = new URLSearchParams();
     const slug = idToSlug(state.species);
     if (slug) {
         params.set('pet', slug);
     }
-    const zip = getZip(state.location);
+    const zip = state.location?.zip;
     if (zip) {
         params.set('zip', zip);
     }

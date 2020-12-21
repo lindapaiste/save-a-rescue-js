@@ -1,6 +1,8 @@
 import {ageGroupValues} from "../../strings/enums";
 import {MaybeDogOrCat, speciesLabel} from "../../strings/species";
 import {useMemo} from "react";
+import {ageLabel} from "../../strings/age";
+
 
 /**
  * replaces "Baby" with "Puppy"/"Kitten"
@@ -8,7 +10,7 @@ import {useMemo} from "react";
 export const ageGroupOptions = (species?: MaybeDogOrCat) =>
     ageGroupValues.map(string => ({
         value: string,
-        label: string === "Baby" ? speciesLabel(species, 'youngSingular') : string,
+        label: ageLabel(string, species)
     }));
 
 export const useAgeGroupOptions = (species?: MaybeDogOrCat) => useMemo(

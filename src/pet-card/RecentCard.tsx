@@ -1,7 +1,7 @@
 import {Card} from "antd";
-import {SquareImage} from "../single-pet/media/SquareImage";
+import {SquareImage} from "../media/SquareImage";
 import React from "react";
-import {SrcSet} from "../single-pet/media/SrcSetImage";
+import {SrcSet} from "../media/SrcSetImage";
 import {MaybeDogOrCat} from "../strings/species";
 
 export interface Props {

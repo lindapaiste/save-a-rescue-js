@@ -1,0 +1,129 @@
+/* ratings styles */
+
+.ratings-box {
+  max-width: 600px;
+  margin: auto;
+}
+
+.ratings-box ul {
+  padding: 0 5% 0 5%;
+  display: flex;
+  flex-direction: column;
+}
+
+.ratings-box ul li {
+  width: 100%;
+  margin-bottom: 15px;
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ratings-box.condensed ul li {
+  margin-bottom: 4px;
+}
+
+.ratings-box .label {
+  color: #727272;
+  font-size: 14px;
+  font-weight: 700;
+  margin: 0;
+}
+
+@media (max-width: 480px) {
+  .ratings-box ul li {
+    flex-direction: column;
+    /* align-items: flex-start; */
+  }
+}
+
+.ratings-box .label {
+  width: 40%;
+  white-space: nowrap;
+}
+
+.ratings-box .bar-rate {
+  width: 60%;
+  height: 25px;
+}
+
+.ratings-box .bar-rate .numbers {
+  opacity: 60%;
+  font-size: 10px;
+}
+
+/*TODO: fixed/min width to address longest title nudging?*/
+
+/* test - ball with number
+{
+    position: absolute;
+    top: 0;
+    left: calc(60% - 10px);
+    background: #000000;
+    color: white;
+    width: 21px;
+    border-radius: 50%;
+    height: 21px;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 20px;
+}
+ */
+
+/* mini style */
+
+.ratings-box.mini ul {
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+
+.ratings-box.mini ul li {
+  width: 50%;
+  flex-direction: column;
+  padding: 0 5%;
+}
+
+.ratings-box.mini .bar-rate {
+  width: 100%;
+  height: 20px;
+}
+
+
+.ratings-box.mini .label {
+  width: 100%;
+}
+
+.ratings-box.mini .bar-rate.numbered > span.numbers {
+  display: none;
+}
+
+.ratings-box.mini .bar-rate .filled {
+  opacity: 90%;
+}
+
+/* horizontal style */
+
+@media (min-width: 1024px) {
+  .ratings-box.horizontal {
+    max-width: none;
+  }
+  .ratings-box.horizontal ul {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  .ratings-box.horizontal ul li {
+    width: 50%;
+  }
+}
+
+/* small caps labels */
+
+.ratings-box.small-caps .label {
+  text-transform: uppercase;
+  font-size: .7rem;
+  letter-spacing: 1px;
+  font-weight: normal;
+  color: black;
+}

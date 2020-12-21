@@ -1,12 +1,13 @@
-import {useGeoLocation} from "../connected/useGeoLocationRedux";
 import {useSearchResults} from "../connected/useSearchResults";
 import {useRequireEntity} from "../connected/useRequireEntity";
 import {useEntitiesSelector} from "../redux/store";
-import {getAttribute, getRelatedIds} from "../redux/selectors";
-import {MaybeDogOrCat, normalizeSpecies, speciesLabel} from "../strings/species";
+import {getAttribute, getRelatedIds} from "../redux/rgSelectors";
+import {isCat, MaybeDogOrCat, normalizeSpecies} from "../strings/species";
 import React, {useMemo} from "react";
 import {RenderSearchResults} from "./SearchResults";
-import { BreedLocationBox } from "../search-box/breed-location/BreedLocation";
+import {BreedLocationBox} from "../search-box/breed-location/BreedLocation";
+import {useUserLocation} from "../location/useUserLocation";
+import {Placement} from "../pet-card/types";
 
 
 export const BreedResultsFromId = ({id}: { id: string }) => {
@@ -35,28 +36,28 @@ export const BreedResultsFromId = ({id}: { id: string }) => {
  */
 
 export const BreedResults = ({id, name, species}: { id: string; name: string; species: MaybeDogOrCat }) => {
-    const {latLon, zip} = useGeoLocation();
 
-    const hasLocation = !!latLon || !!zip;
+    const location = useUserLocation();
 
     const args = useMemo(
         () => {
-            const location = latLon ? latLon : zip ? {postalcode: zip} : undefined;
+            const key = isCat(species) ? 'breedCats' : 'breedDogs';
             return {
-                breed: [{
+                [key]: [{
                     label: name,
                     value: id,
                 }],
+                species,
                 location,
             }
         }
-        , [id, name, latLon, zip]);
+        , [id, name, species, location]);
 
     const results = useSearchResults(args);
 
     return (
         <>
-            {hasLocation ||
+            {location === undefined &&
             <BreedLocationBox
                 species={species}
             />
@@ -64,6 +65,7 @@ export const BreedResults = ({id, name, species}: { id: string; name: string; sp
             <RenderSearchResults
                 {...results}
                 species={species}
+                placement={Placement.BREED_ADOPTABLE}
             />
         </>
     )

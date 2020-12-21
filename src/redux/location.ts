@@ -1,18 +1,12 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {LatLon, ValidUserLocation} from "../location/types";
 
 /**
  * https://developer.mozilla.org/en-US/docs/Web/API/Geolocation_API
  *
  * WebExtensions that wish to use the Geolocation object must add the "geolocation" permission to their manifest. The
  * user's operating system will prompt the user to allow location access the first time it is requested.
- */
-
-export interface LatLon {
-    lat: number;
-    lon: number;
-}
-
-/**
+ *
  * Want to know whether the user has given permission for location, but need to store that as web permissions API is
  * experimental. Do not want to fetch except on explicit button click because this will cause the allow permissions
  * pop-up, which is more likely to be denied if using at the wrong time.
@@ -20,52 +14,93 @@ export interface LatLon {
  * Can store zip code from previous searches, but they do need to enter it once.
  */
 
-export interface LocationState {
+export interface ApiStatus {
     isLoading: boolean;
     didAttempt: boolean;
-    latLon?: LatLon;
-    timestamp?: number;
     error?: string;
-    zip?: string;
+}
+
+export type LocSource = 'input' | 'geo' | 'ip' | 'url';
+
+interface SourceTimestamp {
+    timestamp: number;
+    source: LocSource;
+}
+
+type LocHistoryItem = ValidUserLocation & SourceTimestamp;
+
+export interface LocationState {
+    history: LocHistoryItem[];
+    ip: ApiStatus;
+    geo: ApiStatus;
+}
+
+type FetchableSource = Extract<LocSource, keyof LocationState> // is just 'ip' | 'geo', but now is abstracted
+
+type StartPayload = {source: FetchableSource};
+type ErrorPayload = SourceTimestamp & StartPayload & {
+    error: string;
+}
+type SuccessPayload = StartPayload & LocHistoryItem;
+type ZipPayload = SourceTimestamp & {
+    zip: string;
+}
+
+const initialApiStatus: ApiStatus = {
+    isLoading: false,
+    didAttempt: false,
 }
 
 const initialState: LocationState = {
-    isLoading: false,
-    didAttempt: false,
+    history: [],
+    ip: initialApiStatus,
+    geo: initialApiStatus
 }
 
 export const locationSlice = createSlice({
     name: "location",
     initialState,
     reducers: {
-        enterZip: (state, action: PayloadAction<string>) => {
-            state.zip = action.payload;
+        start: (state, action: PayloadAction<StartPayload>) => {
+            state[action.payload.source].isLoading = true;
+            state[action.payload.source].didAttempt = true;
         },
-        geoStart: (state) => {
-            state.isLoading = true;
-            state.didAttempt = true;
+        error: (state, action: PayloadAction<ErrorPayload>) => {
+            state[action.payload.source].isLoading = false;
+            state[action.payload.source].didAttempt = true;
+            state[action.payload.source].error = action.payload.error;
         },
-        // eslint-disable-next-line no-undef
-        geoSuccess: (state, action: PayloadAction<GeolocationPosition>) => {
-            const {coords, timestamp} = action.payload;
-            delete state.error;
-            state.isLoading = false;
-            state.didAttempt = true;
-            state.timestamp = timestamp;
-            state.latLon = {
-                lat: coords.latitude,
-                lon: coords.longitude
-            }
+        success: (state, action: PayloadAction<SuccessPayload>) => {
+            delete state[action.payload.source].error;
+            state[action.payload.source].isLoading = false;
+            state[action.payload.source].didAttempt = true;
+            state.history.unshift(action.payload);
         },
-        geoError: (state, action: PayloadAction<string>) => {
-            state.error = action.payload;
-            state.isLoading = false;
+        enterZip: (state, action: PayloadAction<ZipPayload>) => {
+            state.history.unshift(action.payload);
         },
-        ipSuccess: ( state, action: PayloadAction<Pick<LocationState, 'latLon' | 'zip'>>) => {
-            if ( ! state.timestamp ) { //avoid overriding more accurate
-                state.latLon = action.payload.latLon;
-                state.zip = action.payload.zip;
-            }
-        }
     }
 })
+
+// want to ignore ip estimated if there is any other type, because the estimated is less accurate
+export const getLocation = (state: LocationState): LocHistoryItem | undefined => {
+    return latestNonEstimated(state) ?? latest(state);
+}
+
+const latest = (state: LocationState): LocHistoryItem | undefined => {
+    return state.history[0];
+}
+
+const latestNonEstimated = (state: LocationState): LocHistoryItem | undefined => {
+    return state.history.find( loc => loc.source !== 'ip' );
+}
+
+export const latestGeo = (state: LocationState): LocHistoryItem & LatLon & {source: 'geo'} | undefined => {
+    return state.history.find( loc => loc.source === 'geo' ) as any;
+}
+
+type LocationFilter<Guarded> = (loc: LocHistoryItem) => loc is Guarded & LocHistoryItem;
+
+export const latestLocation = <Guarded>(state: LocationState, filter: LocationFilter<Guarded> ): Guarded & LocHistoryItem | undefined => {
+    return state.history.find( filter );
+}

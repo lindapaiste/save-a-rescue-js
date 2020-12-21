@@ -1,0 +1,38 @@
+#prosandcons li {
+  list-style: none;
+  margin: 0 1rem 1rem 0;
+  display: flex;
+  align-items: center;
+}
+
+#prosandcons div.icon {
+  margin-right: 1rem;
+  color: #b92020;
+  font-size: 1.5rem;
+}
+
+#prosandcons li .title {
+  font-size: 1.5rem;
+}
+
+#prosandcons li > .text {
+  font-size: 1rem;
+  color: #616161;
+}
+
+#prosandcons h3 {
+  text-align: center;
+  font-size: 2rem;
+  border-bottom: 1px solid #b92020;
+}
+
+#prosandcons {
+  display: flex;
+  flex-direction: row;
+}
+
+@media (max-width: 480px) {
+  #prosandcons {
+    flex-direction: column;
+  }
+}

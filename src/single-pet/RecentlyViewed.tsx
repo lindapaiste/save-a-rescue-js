@@ -1,9 +1,10 @@
 import React from "react";
-import {PetLink} from "../routing/PetLink";
 import {useEntitiesSelector, useSelector} from "../redux/store";
 import {useRequireAnimal} from "../connected/useRequireEntity";
-import {getAnimalPrimaryImage, getAttribute} from "../redux/selectors";
-import {SquareImage} from "./media/SquareImage";
+import {getAnimalPrimaryImage, getAttribute} from "../redux/rgSelectors";
+import {SquareImage} from "../media/SquareImage";
+import {petProfile} from "../routing/paths";
+import {Link} from "react-router-dom";
 
 /**
  * takes prop ignored in order to exclude the current page
@@ -14,6 +15,7 @@ export interface Props {
 }
 
 //TODO: carousel
+//TODO: persist via local storage
 
 export const RecentlyViewed = ({ignored, max = 6}: Props) => {
     const all = useSelector(state => state.recent);
@@ -45,11 +47,9 @@ export const LinkedThumb = ({id}: { id: string }) => {
     const image = useEntitiesSelector(getAnimalPrimaryImage(id));
 
     return (
-        <PetLink id={id}>
-            <div className="recent-pet">
-                {image ? <SquareImage {...image} wrapperClass="image"/> : <div/>}
-                <div className="name">{name}</div>
-            </div>
-        </PetLink>
+        <Link to={petProfile(id)} className={"recent-pet"}>
+            {image ? <SquareImage {...image} wrapperClass="image"/> : <div/>}
+            <span className="name">{name}</span>
+        </Link>
     )
 }

@@ -1,5 +1,5 @@
 import {useEntitiesSelector} from "../redux/store";
-import {getAllAttributes} from "../redux/selectors";
+import {getAllAttributes} from "../redux/rgSelectors";
 import React from "react";
 import {IfTruthy} from "../util/IfDefined";
 

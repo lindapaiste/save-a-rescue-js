@@ -1,5 +1,5 @@
 .search-box {
-    background: #cc0000;
+    background: #B92020;
     padding: 10px;
     font-family: "arial", sans-serif;
 }
@@ -130,4 +130,23 @@
         font-weight: bold;
         text-transform: uppercase;
     }
+}
+
+/** show species like tabs */
+.ant-radio-group-solid.species .ant-radio-button-wrapper {
+    background: unset;
+    border: none;
+    color: white;
+}
+
+.ant-radio-group-solid.species .ant-radio-button-wrapper:hover {
+    background: #FFFFFF33;
+}
+
+.ant-radio-group-solid.species .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled) {
+    border-bottom: 4px solid white;
+}
+
+.ant-radio-group-solid.species .ant-radio-button-wrapper:not(:first-child)::before {
+    display: none;
 }

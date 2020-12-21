@@ -1,0 +1,68 @@
+#home-adoptables {
+}
+
+#home-adoptables h2 {
+    font-size: 2.5rem;
+    font-weight: 100;
+}
+
+#home-adoptables h2 .species {
+    font-weight: 500;
+}
+
+.home-adoptable-pets {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.home-adoptable-pets > a {
+    margin-left: auto;
+    align-self: flex-end;
+    margin-right: 36px;
+}
+
+.pet-grid {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.pet-card-grid-wrapper {
+    width: 25%;
+    padding: 16px;
+}
+
+@media (max-width: 1024px) {
+    .pet-card-grid-wrapper {
+        width: 33.3%;
+    }
+}
+
+@media (max-width: 768px) {
+    .pet-card-grid-wrapper {
+        width: 50%;
+    }
+}
+
+@media (max-width: 480px) {
+
+    #home-adoptables .pet-card-header .ant-card-meta-avatar {
+        display: none;
+    }
+
+    #home-adoptables .pet-card .pet-card-header {
+        justify-content: center;
+        margin: 0;
+    }
+
+    #home-adoptables .pet-card-grid-wrapper {
+        padding: 8px;
+    }
+
+    .home-adoptable-pets > a {
+        margin-right: 28px;
+    }
+
+}

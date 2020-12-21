@@ -1,13 +1,13 @@
 import {useRequireOrg} from "../connected/useRequireEntity";
 import React, {PropsWithChildren, ReactNode} from "react";
 import {useEntitiesSelector} from "../redux/store";
-import {getAttributes} from "../redux/selectors";
+import {getAttributes} from "../redux/rgSelectors";
 import {Card} from "antd";
 import PhoneOutlined from "@ant-design/icons/PhoneOutlined";
 import GlobalOutlined from "@ant-design/icons/GlobalOutlined";
 import EnvironmentOutlined from "@ant-design/icons/EnvironmentOutlined";
 import "./shelter-box.css";
-import {Organization} from "../client/attributes";
+import {Organization} from "../clientRg/attributes";
 
 /**
  * id here is for the shelter -- not the animal

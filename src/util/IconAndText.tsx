@@ -3,14 +3,17 @@
  */
 import React, {ReactNode} from "react";
 
-export interface Props {
-    icon: ReactNode;
-    text: ReactNode;
+export interface SeparatorProps {
     separator?: ReactNode;
     /**
      * if true, put the icon after the text.  defaults to false for before.
      */
     after?: boolean;
+}
+
+export interface Props extends SeparatorProps {
+    icon: ReactNode;
+    text: ReactNode;
 }
 
 export const IconAndText = ({icon, text, separator = " ", after = false}: Props) => {
