@@ -1,8 +1,16 @@
 import React, {PropsWithChildren} from "react";
 import Slider, {Settings} from "@ant-design/react-slick";
-import {LeftOutlined, RightOutlined} from "../../elements/icons";
+import {LeftOutlined, RightOutlined} from "../icons";
 import "slick-carousel/slick/slick.css";
-import "../../elements/slider/slick-modified.less"
+import "./slick-modified.less"
+
+/**
+ * add extra layer around icons to avoid warnings from props set by Slick getting passed down to the DOM
+ * (Warning: React does not recognize the `currentSlide` prop on a DOM element. If you intentionally want it to appear in the DOM as a custom attribute, spell it as lowercase `currentslide` instead. If you accidentally passed it from a parent component, remove it from the DOM element.)
+ * But DO need to pass through className in order to get slick-arrow and slick-next
+ */
+const Prev = ({className}: {className?: string}) => <LeftOutlined className={className}/>;
+const Next = ({className}: {className?: string}) => <RightOutlined className={className}/>;
 
 
 /**
@@ -13,8 +21,8 @@ export const MySlider = ({children, ...settings}: PropsWithChildren<Settings>) =
     return (
         <div className={`slider-content-wrapper ${settings.arrows ? "arrows" : ""}`}>
             <Slider
-                prevArrow={<LeftOutlined/>}
-                nextArrow={<RightOutlined/>}
+                prevArrow={<Prev/>}
+                nextArrow={<Next/>}
                 {...settings}
             >
                 {children}
