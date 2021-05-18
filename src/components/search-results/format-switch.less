@@ -1,0 +1,26 @@
+.switch-format {
+  display: flex;
+}
+
+.switch-format .choice {
+  padding: 8px 12px;
+  height: auto;
+  border: 1px solid #eee;
+  transition: background 200ms;
+}
+
+.switch-format .choice:not(:last-child) {
+  border-right-width: 0;
+}
+
+.switch-format .choice:first-child {
+  border-radius: 5px 0 0 5px;
+}
+
+.switch-format .choice:last-child {
+  border-radius: 0 5px 5px 0;
+}
+
+.switch-format .choice.active {
+  background: #ccc;
+}
