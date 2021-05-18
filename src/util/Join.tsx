@@ -1,10 +1,9 @@
-import {ReactNode} from "react";
-import {isNonNullable} from "@lindapaiste/ts-helpers";
-import React from "react";
+import React, { ReactNode } from "react";
+import { isNonNullable } from "@lindapaiste/ts-helpers";
 
 export interface Props {
-    array: ReactNode[];
-    separator: ReactNode;
+  array: ReactNode[];
+  separator: ReactNode;
 }
 
 /**
@@ -15,16 +14,16 @@ export interface Props {
  *
  * but now filtering out null/undefined so not needed
  */
-export const Join = ({array, separator}: Props) => {
-    const filtered = array.filter(isNonNullable);
-    if (filtered.length === 0) {
-        return null;
-    } else if (filtered.length === 1) {
-        return <>{filtered[0]}</>;
-    } else {
-        return <>{filtered.reduce((prev, curr) => [prev, separator, curr])}</>;
-    }
-}
+export const Join = ({ array, separator }: Props) => {
+  const filtered = array.filter(isNonNullable);
+  if (filtered.length === 0) {
+    return null;
+  }
+  if (filtered.length === 1) {
+    return <>{filtered[0]}</>;
+  }
+  return <>{filtered.reduce((prev, curr) => [prev, separator, curr])}</>;
+};
 
 /*
 Without second argument, reduce() will start at index 1 instead of 0, and React is perfectly happy with nested arrays.

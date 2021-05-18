@@ -1,0 +1,107 @@
+/* make headings large */
+
+#breed-page .ant-collapse-header {
+  font-size: 2rem;
+}
+
+#breed-page
+  .ant-collapse
+  > .ant-collapse-item
+  > .ant-collapse-header
+  .ant-collapse-arrow {
+  font-size: 16px;
+  /* vertical-align: middle; */
+  top: calc(50% - 10px);
+  /* float: right; */
+}
+
+/* colored tabs */
+@media (min-width: 481px) {
+  #breed-page .ant-tabs-nav {
+    border-bottom: 1px solid @primary-color;
+  }
+
+  #breed-page .ant-tabs-card > .ant-tabs-nav .ant-tabs-tab,
+  #breed-page .ant-tabs-card > div > .ant-tabs-nav .ant-tabs-tab {
+    border: 1px solid #b920204a; /* TODO: is a modified opacity version of primary color */
+    border-bottom: 0;
+  }
+
+  #breed-page .ant-tabs-card.ant-tabs-top > .ant-tabs-nav .ant-tabs-tab,
+  #breed-page .ant-tabs-card.ant-tabs-top > div > .ant-tabs-nav .ant-tabs-tab {
+    border-radius: 5px 5px 0 0; /* was 2px */
+  }
+
+  #breed-page .ant-tabs-card > .ant-tabs-nav .ant-tabs-tab-active,
+  #breed-page .ant-tabs-card > div > .ant-tabs-nav .ant-tabs-tab-active {
+    color: white;
+    background: @primary-color;
+  }
+
+  #breed-page .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+    color: white;
+    font-weight: 500;
+  }
+}
+
+@media (max-width: 480px) {
+  /* overrides ant style */
+  .breed-tabs .ant-tabs-tab .anticon {
+    margin: 0;
+  }
+
+  .breed-tabs .ant-tabs-tab {
+    width: 20vw;
+    display: flex;
+    justify-content: center;
+  }
+
+  .breed-tabs.ant-tabs-card.ant-tabs-top > .ant-tabs-nav .ant-tabs-tab-active,
+  .breed-tabs.ant-tabs-card.ant-tabs-top
+    > div
+    > .ant-tabs-nav
+    .ant-tabs-tab-active {
+    border-bottom: 4px solid @primary-color;
+  }
+
+  .breed-tab {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .breed-tab span.icon {
+    font-size: 5vw;
+  }
+
+  .breed-tab span.text {
+    font-size: 2.7vw;
+    text-transform: uppercase;
+  }
+}
+
+.breed-top {
+  display: flex;
+  padding: 3vw;
+}
+
+.breed-top .basic-info {
+  flex: 1 1 58%;
+}
+
+.breed-top .ratings-box {
+  flex: 1 1 42%;
+  margin-left: 1vw;
+}
+
+.breed-top .ratings-box ul {
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: stretch;
+}
+
+.breed-top .ratings-box ul li {
+  width: 100%;
+  margin-bottom: 4px;
+}

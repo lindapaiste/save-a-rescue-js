@@ -1,36 +1,41 @@
 /* antd global body is 14px */
 @media (max-width: 480px) {
-  body, html {
+  body,
+  html {
     font-size: 12px;
   }
 }
 
 @media (min-width: 481px) and (max-width: 767px) {
-  body, html {
+  body,
+  html {
     font-size: 13px;
   }
 }
 
 @media (min-width: 768px) and (max-width: 1024px) {
-  body, html {
+  body,
+  html {
     font-size: 14px;
   }
 }
 
 @media (min-width: 1025px) and (max-width: 1300px) {
-  body, html {
+  body,
+  html {
     font-size: 15px;
   }
 }
 
 @media (min-width: 1301px) {
-  body, html {
+  body,
+  html {
     font-size: 16px;
   }
 }
 
-
 .search-results {
+  width: 100%;
   padding: 0 2%;
 }
 
