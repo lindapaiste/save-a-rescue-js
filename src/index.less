@@ -1,33 +1,35 @@
+@import "~antd/dist/antd.less";
+
 /* antd global body is 14px */
-@media (max-width: 480px) {
+@media (max-width: @screen-xs) {
   body,
   html {
     font-size: 12px;
   }
 }
 
-@media (min-width: 481px) and (max-width: 767px) {
+@media (min-width: @screen-xs + 1px) and (max-width: @screen-sm-max) {
   body,
   html {
     font-size: 13px;
   }
 }
 
-@media (min-width: 768px) and (max-width: 1024px) {
+@media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
   body,
   html {
     font-size: 14px;
   }
 }
 
-@media (min-width: 1025px) and (max-width: 1300px) {
+@media (min-width: @screen-lg-min) and (max-width: @screen-lg-max) {
   body,
   html {
     font-size: 15px;
   }
 }
 
-@media (min-width: 1301px) {
+@media (min-width: @screen-xl-min) {
   body,
   html {
     font-size: 16px;

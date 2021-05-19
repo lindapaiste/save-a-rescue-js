@@ -4,6 +4,8 @@ import { LeftOutlined, RightOutlined } from "@ant-design/icons";
 import "slick-carousel/slick/slick.css";
 import "./slick-modified.less";
 
+// TODO: arrows don't seem to work
+
 /**
  * add extra layer around icons to avoid warnings from props set by Slick getting passed down to the DOM
  * (Warning: React does not recognize the `currentSlide` prop on a DOM element. If you intentionally want it to appear in the DOM as a custom attribute, spell it as lowercase `currentslide` instead. If you accidentally passed it from a parent component, remove it from the DOM element.)

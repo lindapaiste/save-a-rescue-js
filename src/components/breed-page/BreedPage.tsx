@@ -82,9 +82,10 @@ export const BreedPage = ({
       label: "Pros & Cons",
       slug: "facts",
       icon: <BarsOutlined />,
+      // TODO: how to access less breakpoints in code?
       content: (
         <>
-          {width < 1024 && (
+          {width < 992 && (
             <RatingsBox ratings={ratings} className="horizontal condensed" />
           )}
           <ProsAndCons pros={pros} cons={cons} />
@@ -111,9 +112,7 @@ export const BreedPage = ({
     <div id="breed-page">
       <div className="breed-top">
         <BasicInfo {...data} />
-        {width >= 1024 && (
-          <RatingsBox ratings={ratings} className="condensed" />
-        )}
+        {width >= 992 && <RatingsBox ratings={ratings} className="condensed" />}
       </div>
       <AntTabs data={tabs} />
     </div>

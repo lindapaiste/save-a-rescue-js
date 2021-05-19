@@ -1,0 +1,40 @@
+@import "~antd/dist/antd.less";
+
+.recently-viewed {
+  text-align: center;
+
+  .thumbs {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .recent-pet {
+    max-width: 150px;
+    margin: 0 10px;
+
+    .image {
+      border-radius: 10px;
+      box-shadow: 2px 2px 3px 2px #e8e8e8;
+    }
+
+    .name {
+      color: black;
+      text-align: center;
+      font-size: 1.2rem;
+      border-bottom: 2px solid @primary-color;
+    }
+
+    @media (max-width: 380px) {
+      width: calc(50% - 30px);
+    }
+
+    @media (min-width: 381px) {
+      width: calc(33.3% - 30px);
+    }
+
+    @media (min-width: @screen-sm-min) {
+      width: calc(25% - 30px);
+    }
+  }
+}

@@ -1,38 +1,40 @@
-#prosandcons li {
-  list-style: none;
-  margin: 0 1rem 1rem 0;
-  display: flex;
-  align-items: center;
-}
-
-#prosandcons div.icon {
-  margin-right: 1rem;
-  color: @primary-color;
-  font-size: 1.5rem;
-}
-
-#prosandcons li .title {
-  font-size: 1.5rem;
-}
-
-#prosandcons li > .text {
-  font-size: 1rem;
-  color: #616161;
-}
-
-#prosandcons h3 {
-  text-align: center;
-  font-size: 2rem;
-  border-bottom: 1px solid @primary-color;
-}
+@import "~antd/dist/antd.less";
 
 #prosandcons {
   display: flex;
   flex-direction: row;
-}
 
-@media (max-width: 480px) {
-  #prosandcons {
-    flex-direction: column;
+  @media (max-width: @screen-xs-max) {
+    #prosandcons {
+      flex-direction: column;
+    }
+  }
+
+  h3 {
+    text-align: center;
+    font-size: 2rem;
+    border-bottom: 1px solid @primary-color;
+  }
+
+  div.icon {
+    margin-right: 1rem;
+    color: @primary-color;
+    font-size: 1.5rem;
+  }
+
+  li {
+    list-style: none;
+    margin: 0 1rem 1rem 0;
+    display: flex;
+    align-items: center;
+
+    .title {
+      font-size: 1.5rem;
+    }
+
+    & > .text {
+      font-size: 1rem;
+      color: #616161;
+    }
   }
 }

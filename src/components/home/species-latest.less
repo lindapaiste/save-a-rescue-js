@@ -1,63 +1,64 @@
+@import "~antd/dist/antd.less";
+
 .home-adoptable-pets {
   display: flex;
   flex-direction: column;
   align-items: center;
-}
+  margin: 2%;
 
-.home-adoptable-pets > a {
-  margin-left: auto;
-  align-self: flex-end;
-  margin-right: 36px;
-}
+  & > a {
+    margin-left: auto;
+    align-self: flex-end;
+    margin-right: 36px;
+  }
 
-.home-adoptable-pets h2 {
-  font-size: 2.5rem;
-  font-weight: 100;
-}
+  h2 {
+    font-size: 2.5rem;
+    font-weight: 100;
 
-.home-adoptable-pets h2 .species {
-  font-weight: 500;
-}
+    .species {
+      font-weight: 500;
+    }
+  }
 
-.pet-grid {
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-}
+  .pet-grid {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
 
-.pet-card-grid-wrapper {
-  width: 25%;
-  padding: 16px;
-}
-
-@media (max-width: 1024px) {
   .pet-card-grid-wrapper {
-    width: 33.3%;
-  }
-}
+    width: 25%;
+    padding: 16px;
 
-@media (max-width: 768px) {
-  .pet-card-grid-wrapper {
-    width: 50%;
-  }
-}
+    @media (max-width: @screen-md-max) {
+      width: 33.3%;
+    }
 
-@media (max-width: 480px) {
-  .home-adoptable-pets .pet-card-header .ant-card-meta-avatar {
-    display: none;
+    @media (max-width: @screen-sm-max) {
+      width: 50%;
+    }
   }
 
-  .home-adoptable-pets .pet-card .pet-card-header {
-    justify-content: center;
-    margin: 0;
-  }
+  @media (max-width: @screen-xs-max) {
+    .pet-card-grid-wrapper {
+      padding: 8px;
+    }
 
-  .home-adoptable-pets .pet-card-grid-wrapper {
-    padding: 8px;
-  }
+    .pet-card {
+      .pet-card-header {
+        justify-content: center;
+        margin: 0;
 
-  .home-adoptable-pets > a {
-    margin-right: 28px;
+        .ant-card-meta-avatar {
+          display: none;
+        }
+      }
+    }
+
+    & > a {
+      margin-right: 28px;
+    }
   }
 }

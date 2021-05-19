@@ -1,145 +1,142 @@
+@import "~antd/dist/antd.less";
+
 .pet-card {
   border-radius: 7px;
   overflow: hidden;
-  /* TODO: integrate with less rather than copy & pasting */
-  -webkit-box-shadow: 0 1px 2px -2px rgba(0, 0, 0, 0.16),
-    0 3px 6px 0 rgba(0, 0, 0, 0.12), 0 5px 12px 4px rgba(0, 0, 0, 0.09);
-  box-shadow: 0 1px 2px -2px rgba(0, 0, 0, 0.16),
-    0 3px 6px 0 rgba(0, 0, 0, 0.12), 0 5px 12px 4px rgba(0, 0, 0, 0.09);
-}
+  box-shadow: @card-shadow;
 
-/** since shadow is shown always, need a different effect on hover **/
-a:hover .pet-card-image > img {
-  transform: scale(1.1);
-  transition: all 300ms ease-in-out;
-}
-
-.pet-card-cover {
-  position: relative;
-}
-
-.pet-card-image::after {
-  content: "";
-  width: 0;
-  border-bottom: 2px solid @primary-color;
-  position: absolute;
-  bottom: 0;
-  transition: all 300ms ease-in-out;
-}
-
-a:hover .pet-card-image::after {
-  width: 100%;
-}
-
-.pet-card-body {
-  padding: 12px 10px; /* was 24px */
-}
-
-.pet-card-image.placeholder {
-  background: #eaeaea;
-}
-
-.pet-card-meta {
-  text-align: center;
-  margin: 0;
-  clear: both;
-}
-
-.pet-card-header {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  margin: 2px 0 8px 6px;
-}
-
-.pet-card-breed {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.pet-card-meta .ant-card-meta-description {
-  color: rgba(0, 0, 0, 0.5); /* going the tiniest bit darker from .45 to .50 */
-}
-
-.pet-card-distance {
-  display: inline;
-}
-
-.pet-card-distance::after {
-  content: " - ";
-}
-
-/* horizontal format - needs work below 375px - height of meta is taller than square image */
-
-.pet-card.horizontal {
-  display: flex;
-  flex-direction: row;
-  max-width: 800px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.pet-card.horizontal .pet-card-cover {
-  width: 40%;
-  height: auto;
-}
-
-.pet-card.horizontal .pet-card-body {
-  width: 60%;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  align-items: center;
-  overflow: hidden;
-}
-
-.pet-card.horizontal .pet-card-header {
-  justify-content: center;
-  margin: unset;
-}
-
-.pet-card.horizontal .pet-card-meta {
-  margin-bottom: 1rem;
-}
-
-.pet-card .pet-card-name {
-  font-size: 2rem;
-  font-weight: 100;
-}
-
-.pet-card.horizontal .pet-card-name {
-  border-bottom: 1px solid @primary-color;
-}
-
-/* large horizontal - make fonts bigger and image smaller */
-@media (min-width: 481px) {
-  .pet-card.horizontal .ant-card-meta-title {
-    padding-bottom: 7px;
+  /* image */
+  & &-cover {
+    position: relative;
+  }
+  & &-image {
+    &.placeholder {
+      background: #eaeaea;
+    }
+    &:after {
+      content: "";
+      width: 0;
+      border-bottom: 2px solid @primary-color;
+      position: absolute;
+      bottom: 0;
+      transition: all 300ms ease-in-out;
+    }
+  }
+  &:hover &-image {
+    &:after {
+      width: 100%;
+    }
+    img {
+      transform: scale(1.1);
+      transition: all 300ms ease-in-out;
+    }
   }
 
-  .pet-card.horizontal .pet-card-meta .ant-card-meta-description {
-    font-size: 16px;
-    line-height: 2rem;
+  /* contents */
+  & &-body {
+    padding: 12px 10px; /* was 24px */
   }
-}
 
-@media (min-width: 1024px) {
-  .pet-card.horizontal .pet-card-cover {
-    width: 30%;
+  & &-meta {
+    text-align: center;
+    margin: 0;
+    clear: both;
+    .ant-card-meta-description {
+      color: rgba(
+        0,
+        0,
+        0,
+        0.5
+      ); /* going the tiniest bit darker from .45 to .50 */
+    }
+  }
+
+  & &-header {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 2px 0 8px 6px;
+  }
+
+  & &-name {
+    font-size: 2rem;
+    font-weight: 100;
+  }
+
+  & &-breed {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  & &-distance {
+    display: inline;
+  }
+
+  & &-distance:after {
+    content: " - ";
+  }
+
+  /* horizontal format - needs work below 375px - height of meta is taller than square image */
+  &.horizontal {
+    display: flex;
+    flex-direction: row;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+
+    @media (min-width: @screen-sm-min) {
+      .ant-card-meta-title {
+        padding-bottom: 7px;
+      }
+    }
+  }
+
+  &.horizontal &-cover {
+    width: 40%;
+    height: auto;
+  }
+
+  &.horizontal &-body {
+    width: 60%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  &.horizontal &-header {
+    justify-content: center;
+    margin: unset;
+  }
+
+  &.horizontal &-meta {
+    margin-bottom: 1rem;
+    @media (min-width: @screen-sm-min) {
+      .ant-card-meta-description {
+        font-size: 16px;
+        line-height: 2rem;
+      }
+    }
+  }
+
+  &.horizontal &-name {
+    border-bottom: 1px solid @primary-color;
   }
 }
 
-/* todo: horizontal starts to not work with squares below 386px width */
 @media (max-width: 375px) {
   .pet-card {
     font-size: 12px;
-  }
-  .pet-card.horizontal .pet-card-meta {
-    margin-bottom: 0.5rem;
-  }
-  .pet-card.horizontal .pet-card-body {
-    padding: 0;
+
+    &.horizontal &-meta {
+      margin-bottom: 0.5rem;
+    }
+
+    &.horizontal &-body {
+      padding: 0;
+    }
   }
 }

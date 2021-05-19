@@ -1,26 +1,33 @@
+@import "~antd/dist/antd.less";
+
 .switch-format {
   display: flex;
-}
 
-.switch-format .choice {
-  padding: 8px 12px;
-  height: auto;
-  border: 1px solid #eee;
-  transition: background 200ms;
-}
+  .choice {
+    padding: 8px 12px;
+    height: auto;
+    border: 1px solid #eee;
+    transition: background 200ms;
+    border-radius: 0;
 
-.switch-format .choice:not(:last-child) {
-  border-right-width: 0;
-}
+    &.active {
+      background: #ccc;
+    }
 
-.switch-format .choice:first-child {
-  border-radius: 5px 0 0 5px;
-}
+    &:not(:last-child) {
+      border-right-width: 0;
+    }
 
-.switch-format .choice:last-child {
-  border-radius: 0 5px 5px 0;
-}
+    &:first-child {
+      border-radius: 5px 0 0 5px;
+    }
 
-.switch-format .choice.active {
-  background: #ccc;
+    &:last-child {
+      border-radius: 0 5px 5px 0;
+    }
+
+    @media (max-width: @screen-xs-min) {
+      padding: 2px 10px;
+    }
+  }
 }

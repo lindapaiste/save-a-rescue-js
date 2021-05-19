@@ -1,11 +1,7 @@
 import { useCallback, useEffect, useMemo } from "react";
 import { PartialSome } from "@lindapaiste/ts-helpers";
 import { shouldFetchEntity } from "./selectors";
-import {
-  useEntitiesSelector,
-  useSelector,
-  useDispatch,
-} from "../../store";
+import { useEntitiesSelector, useSelector, useDispatch } from "../../store";
 import { RgEntityIdentifier, RgEntityType } from "../schema/attributes";
 import { RgRequest } from "../client/RgRequest";
 import { RgClient } from "../client/RgClient";

@@ -1,7 +1,6 @@
 import React from "react";
 import { SpeciesLatest } from "./SpeciesLatest";
 import { DogOrCat } from "../../services/species/species";
-import "./home.less";
 import { useSeoTitle } from "../../services/seo/useSeoTitle";
 
 export const Home = () => {

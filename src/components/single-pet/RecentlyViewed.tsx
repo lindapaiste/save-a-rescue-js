@@ -8,6 +8,7 @@ import {
 import { SquareImage } from "../media/SquareImage";
 import { selectRecentlyViewed } from "../../services/recently-viewed/recent";
 import { PetLink } from "../../services/routing/links/PetLink";
+import "./recently-viewed.less";
 
 export const LinkedThumb = ({ id }: { id: string }) => {
   useRequireAnimal(id);
