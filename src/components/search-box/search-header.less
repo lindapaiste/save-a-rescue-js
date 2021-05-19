@@ -1,47 +1,51 @@
+@import "~antd/dist/antd.less";
+
 .search-box {
   background: @primary-color;
   padding: 10px;
   font-family: "arial", sans-serif;
-}
 
-.search-box .ant-form-item {
-  margin: 10px;
-  max-width: fit-content;
-}
+  .ant-form-item {
+    margin: 10px;
+    max-width: fit-content;
 
-/** Remove double padding on nested items */
-.search-box .ant-form-item .ant-form-item {
-  margin: 0;
-}
+    /** Remove double padding on nested items */
 
-.search-box .ant-form-item-label > label,
-.search-box .location-grouping > span {
-  color: white;
-  font-weight: bold;
-  text-transform: uppercase;
-}
+    .ant-form-item {
+      margin: 0;
+    }
+  }
 
-.search-box .location-grouping {
-  display: flex;
-  align-items: center;
-  width: 350px; /* temporary bug fix hack */
-}
+  .ant-form-item-explain {
+    color: rgba(255, 255, 255, 0.68);
+    font-size: 0.9rem;
+  }
 
-.search-box .ant-form-item-explain {
-  color: rgba(255, 255, 255, 0.68);
-}
+  .ant-form-item-label > label,
+  .location-grouping > span {
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
 
-.search-box .location-grouping .ant-form-item {
-  margin: 0;
-}
+  .location-grouping {
+    display: flex;
+    align-items: center;
+    width: 350px; /* temporary bug fix hack */
 
-.search-box .location-grouping > span {
-  margin: 0 15px;
-}
+    .ant-form-item {
+      margin: 0;
+    }
 
-.search-box .ant-select,
-.search-box .ant-input {
-  min-width: 150px;
+    & > span {
+      margin: 0 15px;
+    }
+  }
+
+  .ant-select,
+  .ant-input {
+    min-width: 150px;
+  }
 }
 
 @media (max-width: 480px) {
@@ -53,80 +57,85 @@
 /**
  * show on the left side on large screens
  */
-@media (min-width: 1000px) {
+@media (min-width: @screen-lg-min) {
   .search-page {
     display: flex;
   }
 
   .search-box {
     width: 250px;
-  }
 
-  .search-box form {
-    position: sticky;
-    top: 20px;
+    form {
+      position: sticky;
+      top: 20px;
+    }
   }
 }
 
 /*
  * shared styles of vertical menu either large or small
  */
-@media (min-width: 1000px), (max-width: 480px) {
-  .ant-col {
-    width: 100%;
-  }
+@media (min-width: @screen-lg-min), (max-width: @screen-xs-min) {
+  .search-box {
+    .ant-col {
+      width: 100%;
+    }
 
-  .search-box .ant-form-item {
-    max-width: none;
-  }
+    .ant-form-item {
+      max-width: none;
+    }
 
-  .search-box .location-grouping {
-    display: block;
-  }
-  .search-box .location-grouping button {
-    margin-bottom: 10px;
-  }
+    .location-grouping {
+      display: block;
 
-  .zip-code-input {
-    width: 210px;
-  }
+      button {
+        margin-bottom: 10px;
+      }
 
-  .ant-radio-group.species {
-    width: 100%;
-    display: flex;
-  }
+      .zip-code-input {
+        width: 210px;
+      }
+    }
 
-  .ant-radio-group.species > label {
-    flex: 1;
-    text-align: center;
+    .ant-radio-group.species {
+      width: 100%;
+      display: flex;
+
+      & > label {
+        flex: 1;
+        text-align: center;
+      }
+    }
   }
 }
 
 /*
  * need to override a bunch of styles on the collapse
  */
-@media (max-width: 480px) {
-  .search-box .ant-collapse {
-    background: inherit;
-    border: none;
-  }
+@media (max-width: @screen-xs-min) {
+  .search-box {
+    .ant-collapse {
+      background: inherit;
+      border: none;
 
-  .search-box .ant-collapse-content {
-    border-top: none;
-    background: inherit;
-  }
+      & > .ant-collapse-item {
+        border-bottom: none;
 
-  .search-box .ant-collapse > .ant-collapse-item {
-    border-bottom: none;
-  }
+        & > .ant-collapse-content {
+          border-top: none;
+          background: inherit;
+        }
 
-  .search-box .ant-collapse > .ant-collapse-item > .ant-collapse-header {
-    color: white;
-  }
+        & > .ant-collapse-header {
+          color: white;
 
-  .search-box .collapse-header {
-    font-weight: bold;
-    text-transform: uppercase;
+          .collapse-header {
+            font-weight: bold;
+            text-transform: uppercase;
+          }
+        }
+      }
+    }
   }
 }
 
@@ -135,18 +144,16 @@
   background: unset;
   border: none;
   color: white;
-}
 
-.ant-radio-group-solid.species .ant-radio-button-wrapper:hover {
-  background: #ffffff33;
-}
+  &:hover {
+    background: #ffffff33;
+  }
 
-.ant-radio-group-solid.species
-  .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled) {
-  border-bottom: 4px solid white;
-}
+  &-checked:not(.ant-radio-button-wrapper-disabled) {
+    border-bottom: 4px solid white;
+  }
 
-.ant-radio-group-solid.species
-  .ant-radio-button-wrapper:not(:first-child)::before {
-  display: none;
+  &:not(:first-child)::before {
+    display: none;
+  }
 }

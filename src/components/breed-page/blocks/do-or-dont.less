@@ -1,23 +1,18 @@
-/* dos and don'ts */
-.dos-donts .label {
-  color: @primary-color;
-}
+@import "~antd/dist/antd.less";
 
+/* dos and don'ts */
 .dos-donts {
   font-size: 1.5rem;
-}
-
-.dos-donts .label .text {
-  /* text-transform: uppercase; */
-  /* text-decoration: underline; */
-  /* margin-right: 1rem; */
-  color: black;
-}
-
-.dos-donts .label .text:after {
-  content: ":";
-}
-
-.dos-donts .label .icon {
-  margin-right: 1rem;
+  .label {
+    color: @primary-color;
+    .text {
+      color: black;
+      &::after {
+        content: ":";
+      }
+    }
+    .icon {
+      margin-right: 1rem;
+    }
+  }
 }

@@ -1,3 +1,5 @@
+@import "~antd/dist/antd.less";
+
 /* breed card */
 .basic-info {
   display: flex;
@@ -6,78 +8,71 @@
   border: 1px solid #ccc;
   box-shadow: 4px 4px 12px 4px #d8d8d8;
   align-items: stretch;
-}
 
-.basic-info .credit {
-  font-size: 0.75rem;
-  color: gray;
-  text-align: right;
-  margin: 0.5rem 1.5rem 0.5rem 0.5rem;
-}
+  img {
+    width: 30vw;
+    height: 100%;
+    object-fit: cover;
 
-.basic-info .info {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  justify-content: space-between;
-  flex: 1;
-}
+    /** because the card is not full width, the image needs to be smaller */
+    @media (min-width: @screen-lg-min) {
+      width: 20vw;
+    }
+  }
 
-.fact-box {
-  display: flex;
-  justify-content: space-around;
-}
+  .credit {
+    font-size: 0.75rem;
+    color: gray;
+    text-align: right;
+    margin: 0.5rem 1.5rem 0.5rem 0.5rem;
+  }
 
-.fact .value .value {
-  font-size: 1.5rem;
-}
-
-.fact {
-  margin: 1rem 0;
-}
-
-.fact .units {
-  /* color: gray; */
-}
-
-.fact .label {
-  color: gray;
-}
-
-.basic-info img {
-  width: 30vw;
-  height: 100%;
-  object-fit: cover;
-}
-
-.basic-info .info .title {
-  width: 100%;
-  text-align: center;
-  font-size: 3rem;
-  background: @primary-color;
-  color: white;
-  font-weight: bold;
-  margin: 0;
-  /* box-shadow: 0px 2px 3px #c1c1c1; */
-}
-
-@media (max-width: 480px) {
-  .basic-info {
+  .info {
+    display: flex;
     flex-direction: column;
-  }
-  .basic-info img {
-    width: 100%;
-    height: 30vh;
-  }
-  .fact {
-    padding-left: 2rem;
-  }
-}
+    align-items: stretch;
+    justify-content: space-between;
+    flex: 1;
 
-/** because the card is not full width, the image needs to be smaller */
+    .title {
+      width: 100%;
+      text-align: center;
+      font-size: 3rem;
+      background: @primary-color;
+      color: white;
+      font-weight: bold;
+      margin: 0;
+      /* box-shadow: 0px 2px 3px #c1c1c1; */
+    }
+  }
 
-@media (min-width: 1024px) {
-  .basic-info img {
-    width: 20vw;
+  .fact-box {
+    display: flex;
+    justify-content: space-around;
+
+    .fact {
+      margin: 1rem 0;
+
+      .label {
+        color: gray;
+      }
+
+      .value .value {
+        font-size: 1.5rem;
+      }
+    }
+  }
+
+  @media (max-width: @screen-xs-min) {
+    flex-direction: column;
+
+    img {
+      width: 100%;
+      height: 30vh;
+    }
+
+    .fact {
+      padding-left: 2rem;
+    }
   }
 }

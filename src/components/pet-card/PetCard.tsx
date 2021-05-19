@@ -3,10 +3,10 @@ import React from "react";
 import { isDefined } from "@lindapaiste/ts-helpers";
 import { isEmpty } from "lodash";
 import { SquareImage, SquareWrapper } from "../media/SquareImage";
-import "./card-style.less";
 import { milesAway } from "../../util/strings/distance";
 import { PetCardProps } from "./types";
 import { ageAndSex } from "../../util/strings/age";
+import "./card-style.less";
 
 const { Meta } = Card;
 
