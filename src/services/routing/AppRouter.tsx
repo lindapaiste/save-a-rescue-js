@@ -1,4 +1,4 @@
-import { Route, Switch } from "react-router-dom";
+import { Redirect, Route, Switch } from "react-router-dom";
 import React from "react";
 import { PetProfile } from "../../components/single-pet/PetProfile";
 import { SearchRoute } from "../../components/search-results/SearchPage";
@@ -14,6 +14,7 @@ export const AppRouter = () => (
     />
     <Route path="/breed/dalmatian/:tab" component={Dalmatian} />
     <Route path="/breed/dalmatian" component={Dalmatian} />
+    <Route path="/breed" render={() => <Redirect to="/breed/dalmatian" />} />
     <Route path={PATHS.search()} component={SearchRoute} />
     <Route component={Home} />
   </Switch>
