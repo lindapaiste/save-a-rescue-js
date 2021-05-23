@@ -97,7 +97,7 @@ export const SearchPage = ({
 /**
  * breaking up into two components so that the url only gets evaluated once
  */
-export const SearchRoute = () => {
+export default function SearchRoute() {
   const urlValues = usePetZipQueryParams();
 
   const initialValues = {
@@ -106,4 +106,4 @@ export const SearchRoute = () => {
   };
 
   return <SearchPage initialValues={initialValues} />;
-};
+}
