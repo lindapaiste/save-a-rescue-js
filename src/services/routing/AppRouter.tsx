@@ -26,8 +26,8 @@ export const AppRouter = () => (
   <Suspense fallback={PageLoading}>
     <Switch>
       <Route path={PATHS.petProfile(":id")} component={PetProfile} />
-      <Route path="/breed/dalmatian/:tab" component={Dalmatian} />
-      <Route path="/breed/dalmatian" component={Dalmatian} />
+      <Route path="/breed/:slug/:tab" component={Dalmatian} />
+      <Route path="/breed/:slug" component={Dalmatian} />
       <Route path="/breed" render={() => <Redirect to="/breed/dalmatian" />} />
       <Route path={PATHS.search()} component={Search} />
       <Route component={Home} />
