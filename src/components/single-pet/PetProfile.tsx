@@ -2,7 +2,7 @@ import "./pet-profile.less";
 import React, { useEffect } from "react";
 import { Col, Row } from "antd";
 import { ArrowLeftOutlined } from "@ant-design/icons";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import {
   useDispatch,
   useEntitiesSelector,
@@ -127,3 +127,11 @@ export const PetProfile = ({ id }: Props) => {
     </div>
   );
 };
+
+/**
+ * Page gets the id from the URL
+ */
+export default function ProfilePage() {
+  const { id } = useParams<{ id: string }>();
+  return <PetProfile id={id} />;
+}
